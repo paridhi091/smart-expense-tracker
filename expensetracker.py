@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import os
+from sklearn.linear_model import LinearRegression
+import numpy as np 
 
 FILE_NAME = "expenses.csv"
 
@@ -28,3 +30,35 @@ if st.button("Add Expense"):
         st.success(f"Added: ₹{amount} for {category}")
     else:
         st.warning("Please enter valid data")
+
+if os.path.exists(FILE_NAME):
+    df = pd.read_csv(FILE_NAME)
+
+    st.subheader(" Your Expenses")
+    st.dataframe(df)
+
+    # Total spending
+    total = df["Amount"].sum()
+    st.metric("Total Spending", f"₹ {total}")
+
+
+    if len(df) > 1:
+        df["Day"] = range(1, len(df) + 1)
+
+        X = df[["Day"]]
+        y = df["Amount"]
+
+        model = LinearRegression()
+        model.fit(X, y)
+
+        future_day = np.array([[len(df) + 1]])
+        prediction = model.predict(future_day)
+
+        st.subheader("🔮 Predicted Next Expense")
+        st.write(f"₹ {prediction[0]:.2f}")
+    else:
+        st.info("Add at least 2 expenses for prediction")
+        
+        
+else:
+    st.warning("No expenses yet!")
