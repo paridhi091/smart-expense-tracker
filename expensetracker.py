@@ -41,7 +41,7 @@ if os.path.exists(FILE_NAME):
     total = df["Amount"].sum()
     st.metric("Total Spending", f"₹ {total}")
 
-    # 📊 Smart Insights
+    #  Smart Insights
 if os.path.exists(FILE_NAME):
     df = pd.read_csv(FILE_NAME)
 
