@@ -99,6 +99,4 @@ This app helps users monitor their spending, understand patterns, and make bette
 
 ---
 
-##  Note
 
-This is a beginner-level project created for learning purposes.
